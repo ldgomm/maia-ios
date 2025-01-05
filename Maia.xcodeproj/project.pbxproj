@@ -1,0 +1,648 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AC78DBC52CDD152B00DEDFBA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBC42CDD152B00DEDFBA /* FirebaseAuth */; };
+		AC78DBC72CDD152B00DEDFBA /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBC62CDD152B00DEDFBA /* FirebaseAuthCombine-Community */; };
+		AC78DBC92CDD152B00DEDFBA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBC82CDD152B00DEDFBA /* FirebaseFirestore */; };
+		AC78DBCB2CDD152B00DEDFBA /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBCA2CDD152B00DEDFBA /* FirebaseFirestoreCombine-Community */; };
+		AC78DBCD2CDD152B00DEDFBA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBCC2CDD152B00DEDFBA /* FirebaseStorage */; };
+		AC78DBCF2CDD152B00DEDFBA /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = AC78DBCE2CDD152B00DEDFBA /* FirebaseStorageCombine-Community */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ACAF618A2CD5430F007FE1A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACAF61712CD5430E007FE1A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACAF61782CD5430E007FE1A9;
+			remoteInfo = Maia;
+		};
+		ACAF61942CD5430F007FE1A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACAF61712CD5430E007FE1A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACAF61782CD5430E007FE1A9;
+			remoteInfo = Maia;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ACAF61792CD5430E007FE1A9 /* Maia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACAF61892CD5430F007FE1A9 /* MaiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACAF61932CD5430F007FE1A9 /* MaiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		ACAF617B2CD5430E007FE1A9 /* Maia */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Maia;
+			sourceTree = "<group>";
+		};
+		ACAF618C2CD5430F007FE1A9 /* MaiaTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MaiaTests;
+			sourceTree = "<group>";
+		};
+		ACAF61962CD5430F007FE1A9 /* MaiaUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MaiaUITests;
+			sourceTree = "<group>";
+		};
+		ACAF62F32CD54438007FE1A9 /* en.lproj */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		ACAF62F42CD54441007FE1A9 /* es.lproj */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = es.lproj;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ACAF61762CD5430E007FE1A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC78DBC52CDD152B00DEDFBA /* FirebaseAuth in Frameworks */,
+				AC78DBCB2CDD152B00DEDFBA /* FirebaseFirestoreCombine-Community in Frameworks */,
+				AC78DBC72CDD152B00DEDFBA /* FirebaseAuthCombine-Community in Frameworks */,
+				AC78DBCD2CDD152B00DEDFBA /* FirebaseStorage in Frameworks */,
+				AC78DBCF2CDD152B00DEDFBA /* FirebaseStorageCombine-Community in Frameworks */,
+				AC78DBC92CDD152B00DEDFBA /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF61862CD5430F007FE1A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF61902CD5430F007FE1A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ACAF61702CD5430E007FE1A9 = {
+			isa = PBXGroup;
+			children = (
+				ACAF62F32CD54438007FE1A9 /* en.lproj */,
+				ACAF62F42CD54441007FE1A9 /* es.lproj */,
+				ACAF617B2CD5430E007FE1A9 /* Maia */,
+				ACAF618C2CD5430F007FE1A9 /* MaiaTests */,
+				ACAF61962CD5430F007FE1A9 /* MaiaUITests */,
+				ACAF617A2CD5430E007FE1A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ACAF617A2CD5430E007FE1A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ACAF61792CD5430E007FE1A9 /* Maia.app */,
+				ACAF61892CD5430F007FE1A9 /* MaiaTests.xctest */,
+				ACAF61932CD5430F007FE1A9 /* MaiaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ACAF61782CD5430E007FE1A9 /* Maia */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACAF619D2CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "Maia" */;
+			buildPhases = (
+				ACAF61752CD5430E007FE1A9 /* Sources */,
+				ACAF61762CD5430E007FE1A9 /* Frameworks */,
+				ACAF61772CD5430E007FE1A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				ACAF617B2CD5430E007FE1A9 /* Maia */,
+				ACAF62F32CD54438007FE1A9 /* en.lproj */,
+				ACAF62F42CD54441007FE1A9 /* es.lproj */,
+			);
+			name = Maia;
+			packageProductDependencies = (
+				AC78DBC42CDD152B00DEDFBA /* FirebaseAuth */,
+				AC78DBC62CDD152B00DEDFBA /* FirebaseAuthCombine-Community */,
+				AC78DBC82CDD152B00DEDFBA /* FirebaseFirestore */,
+				AC78DBCA2CDD152B00DEDFBA /* FirebaseFirestoreCombine-Community */,
+				AC78DBCC2CDD152B00DEDFBA /* FirebaseStorage */,
+				AC78DBCE2CDD152B00DEDFBA /* FirebaseStorageCombine-Community */,
+			);
+			productName = Maia;
+			productReference = ACAF61792CD5430E007FE1A9 /* Maia.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ACAF61882CD5430F007FE1A9 /* MaiaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACAF61A02CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "MaiaTests" */;
+			buildPhases = (
+				ACAF61852CD5430F007FE1A9 /* Sources */,
+				ACAF61862CD5430F007FE1A9 /* Frameworks */,
+				ACAF61872CD5430F007FE1A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ACAF618B2CD5430F007FE1A9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ACAF618C2CD5430F007FE1A9 /* MaiaTests */,
+			);
+			name = MaiaTests;
+			packageProductDependencies = (
+			);
+			productName = MaiaTests;
+			productReference = ACAF61892CD5430F007FE1A9 /* MaiaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ACAF61922CD5430F007FE1A9 /* MaiaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACAF61A32CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "MaiaUITests" */;
+			buildPhases = (
+				ACAF618F2CD5430F007FE1A9 /* Sources */,
+				ACAF61902CD5430F007FE1A9 /* Frameworks */,
+				ACAF61912CD5430F007FE1A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ACAF61952CD5430F007FE1A9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ACAF61962CD5430F007FE1A9 /* MaiaUITests */,
+			);
+			name = MaiaUITests;
+			packageProductDependencies = (
+			);
+			productName = MaiaUITests;
+			productReference = ACAF61932CD5430F007FE1A9 /* MaiaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ACAF61712CD5430E007FE1A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					ACAF61782CD5430E007FE1A9 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					ACAF61882CD5430F007FE1A9 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = ACAF61782CD5430E007FE1A9;
+					};
+					ACAF61922CD5430F007FE1A9 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = ACAF61782CD5430E007FE1A9;
+					};
+				};
+			};
+			buildConfigurationList = ACAF61742CD5430E007FE1A9 /* Build configuration list for PBXProject "Maia" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				es,
+			);
+			mainGroup = ACAF61702CD5430E007FE1A9;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ACAF617A2CD5430E007FE1A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACAF61782CD5430E007FE1A9 /* Maia */,
+				ACAF61882CD5430F007FE1A9 /* MaiaTests */,
+				ACAF61922CD5430F007FE1A9 /* MaiaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ACAF61772CD5430E007FE1A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF61872CD5430F007FE1A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF61912CD5430F007FE1A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACAF61752CD5430E007FE1A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF61852CD5430F007FE1A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACAF618F2CD5430F007FE1A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ACAF618B2CD5430F007FE1A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACAF61782CD5430E007FE1A9 /* Maia */;
+			targetProxy = ACAF618A2CD5430F007FE1A9 /* PBXContainerItemProxy */;
+		};
+		ACAF61952CD5430F007FE1A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACAF61782CD5430E007FE1A9 /* Maia */;
+			targetProxy = ACAF61942CD5430F007FE1A9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		ACAF619B2CD5430F007FE1A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ACAF619C2CD5430F007FE1A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ACAF619E2CD5430F007FE1A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Maia/Maia.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Maia/Preview Content\"";
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.Maia;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ACAF619F2CD5430F007FE1A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Maia/Maia.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Maia/Preview Content\"";
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.Maia;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ACAF61A12CD5430F007FE1A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.MaiaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Maia";
+			};
+			name = Debug;
+		};
+		ACAF61A22CD5430F007FE1A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.MaiaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maia.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Maia";
+			};
+			name = Release;
+		};
+		ACAF61A42CD5430F007FE1A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.MaiaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Maia;
+			};
+			name = Debug;
+		};
+		ACAF61A52CD5430F007FE1A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5KDK28ZYPD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.premierdarkcoffee.sales.MaiaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Maia;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACAF61742CD5430E007FE1A9 /* Build configuration list for PBXProject "Maia" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACAF619B2CD5430F007FE1A9 /* Debug */,
+				ACAF619C2CD5430F007FE1A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACAF619D2CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "Maia" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACAF619E2CD5430F007FE1A9 /* Debug */,
+				ACAF619F2CD5430F007FE1A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACAF61A02CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "MaiaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACAF61A12CD5430F007FE1A9 /* Debug */,
+				ACAF61A22CD5430F007FE1A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACAF61A32CD5430F007FE1A9 /* Build configuration list for PBXNativeTarget "MaiaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACAF61A42CD5430F007FE1A9 /* Debug */,
+				ACAF61A52CD5430F007FE1A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AC78DBC42CDD152B00DEDFBA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		AC78DBC62CDD152B00DEDFBA /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		AC78DBC82CDD152B00DEDFBA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		AC78DBCA2CDD152B00DEDFBA /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		AC78DBCC2CDD152B00DEDFBA /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		AC78DBCE2CDD152B00DEDFBA /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC78DBC32CDD152B00DEDFBA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = ACAF61712CD5430E007FE1A9 /* Project object */;
+}
