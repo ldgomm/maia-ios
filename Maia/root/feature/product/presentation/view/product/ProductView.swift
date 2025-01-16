@@ -28,12 +28,20 @@ struct ProductView: View {
                             ProgressView()
                                 .frame(width: 50, height: 50)
                         case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .clipShape(RoundedRectangle(cornerRadius: 11))
-                                .frame(maxWidth: .infinity, maxHeight: 300)
-                                .padding(.horizontal)
+                            ZStack(alignment: .bottomTrailing) {
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity, maxHeight: 500)
+                                Text(product.category.subclass)
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(Color.gray.opacity(0.5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .padding([.trailing, .bottom], 10)
+                            }
                         case .failure:
                             Image(systemName: "photo")
                                 .resizable()

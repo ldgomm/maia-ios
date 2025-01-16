@@ -14,6 +14,8 @@
 "without_interest" = "Sin Interés";
 "with_interest" = "Con Interés";
 "free_months" = "Meses Gratis";
+"all" = "Todos";
+"for_months_label" = "Por %d meses:";
 
 "general_information_header" = "Información General";
 "name_label" = "Nombre";

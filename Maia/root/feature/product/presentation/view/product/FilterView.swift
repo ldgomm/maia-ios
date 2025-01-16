@@ -8,56 +8,77 @@
 import SwiftUI
 
 struct FilterView: View {
-    @Binding var selectedMi: Mi?
-    @Binding var selectedNi: Ni?
-    @Binding var selectedXi: Xi?
-    var categories: Categories
+    @Binding var selectedGroup: Group?
+    @Binding var selectedDomain: Domain?
+    @Binding var selectedSubclass: Subclass?
+    var groups: [Group]
     var products: [Product]
-
-    var nonEmptyCategories: Categories {
-        var result: Categories = [:]
-        for (mi, niDict) in categories {
-            var nonEmptyNiDict: [Ni: [Xi]] = [:]
-            for (ni, xiList) in niDict {
-                let nonEmptyXiList = xiList.filter { xi in
-                    products.contains { $0.category.group == mi.name && $0.category.domain == ni.name && $0.category.subclass == xi.name }
-                }
-                if !nonEmptyXiList.isEmpty {
-                    nonEmptyNiDict[ni] = nonEmptyXiList
-                }
-            }
-            if !nonEmptyNiDict.isEmpty {
-                result[mi] = nonEmptyNiDict
-            }
-        }
-        return result
+    
+    var nonEmptyGroups: [Group] {
+        groups.filter { groupHasProducts($0) }
     }
-
+    
+    var nonEmptyDomains: [Domain] {
+        guard let selectedGroup = selectedGroup else { return [] }
+        return selectedGroup.domains.filter { domainHasProducts($0, in: selectedGroup) }
+    }
+    
+    var nonEmptySubclasses: [Subclass] {
+        guard let selectedGroup = selectedGroup, let selectedDomain = selectedDomain else { return [] }
+        return selectedDomain.subclasses.filter { subclassHasProducts($0, in: selectedGroup, and: selectedDomain) }
+    }
+    
+    private func groupHasProducts(_ group: Group) -> Bool {
+        group.domains.contains { domainHasProducts($0, in: group) }
+    }
+    
+    private func domainHasProducts(_ domain: Domain, in group: Group) -> Bool {
+        domain.subclasses.contains { subclassHasProducts($0, in: group, and: domain) }
+    }
+    
+    private func subclassHasProducts(_ subclass: Subclass, in group: Group, and domain: Domain) -> Bool {
+        products.contains { product in
+            product.category.group == group.name &&
+            product.category.domain == domain.name &&
+            product.category.subclass == subclass.name
+        }
+    }
+    
     var body: some View {
         VStack {
-            Picker(LocalizedStringKey("group_picker_label"), selection: $selectedMi) {
-                Text(LocalizedStringKey("all_picker_option")).tag(nil as Mi?)
-                ForEach(nonEmptyCategories.keys.sorted(by: { $0.name < $1.name }), id: \.self) { mi in
-                    Text(mi.name).tag(mi as Mi?)
+            // Group Picker
+            Picker(NSLocalizedString("group", comment: ""), selection: $selectedGroup) {
+                Text(NSLocalizedString("all", comment: "")).tag(nil as Group?)
+                ForEach(nonEmptyGroups.sorted { $0.name < $1.name }, id: \.self) { group in
+                    Text(group.name).tag(group as Group?)
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(.segmented)
+            .onChange(of: selectedGroup) { _, _ in
+                selectedDomain = nil
+                selectedSubclass = nil
+            }
             
-            if let selectedMi = selectedMi {
-                Picker(LocalizedStringKey("category_picker_label"), selection: $selectedNi) {
-                    Text(LocalizedStringKey("all_picker_option")).tag(nil as Ni?)
-                    ForEach(nonEmptyCategories[selectedMi]?.keys.sorted(by: { $0.name < $1.name }) ?? [], id: \.self) { ni in
-                        Text(ni.name).tag(ni as Ni?)
+            // Domain Picker
+            if selectedGroup != nil {
+                Picker(NSLocalizedString("domain", comment: ""), selection: $selectedDomain) {
+                    Text(NSLocalizedString("all", comment: "")).tag(nil as Domain?)
+                    ForEach(nonEmptyDomains.sorted { $0.name < $1.name }, id: \.self) { domain in
+                        Text(domain.name).tag(domain as Domain?)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                .pickerStyle(.segmented)
+                .onChange(of: selectedDomain) { _, _ in
+                    selectedSubclass = nil
+                }
             }
             
-            if let selectedMi = selectedMi, let selectedNi = selectedNi {
-                Picker(LocalizedStringKey("subcategory_picker_label"), selection: $selectedXi) {
-                    Text(LocalizedStringKey("all_picker_option")).tag(nil as Xi?)
-                    ForEach(nonEmptyCategories[selectedMi]?[selectedNi]?.sorted(by: { $0.name < $1.name }) ?? [], id: \.self) { xi in
-                        Text(xi.name).tag(xi as Xi?)
+            // Subclass Picker
+            if selectedGroup != nil, selectedDomain != nil {
+                Picker(NSLocalizedString("subclass", comment: ""), selection: $selectedSubclass) {
+                    Text(NSLocalizedString("all", comment: "")).tag(nil as Subclass?)
+                    ForEach(nonEmptySubclasses.sorted { $0.name < $1.name }, id: \.self) { subclass in
+                        Text(subclass.name).tag(subclass as Subclass?)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -65,6 +86,4 @@ struct FilterView: View {
         }
         .padding(.horizontal)
     }
-
 }
-

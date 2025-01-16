@@ -11,6 +11,8 @@ import Foundation
 
 final class ProductViewModel: ObservableObject {
     @Published private(set) var products: [Product] = []
+    private var allProducts: [Product] = []
+    
     @Published private(set) var searchProducts: [Product] = []
     @Published var groups: [Group] = []
     
@@ -43,43 +45,41 @@ final class ProductViewModel: ObservableObject {
      This function retrieves all products from the server.
      */
     func getProducts() {
-        print("ViewModel | getProducts")
         getProductsUseCase.invoke(from: getUrl(endpoint: "maia-product"))
             .sink { (result: Result<[ProductDto], NetworkError>) in
                 switch result {
                 case .success(let success):
-                    print("Success: \(success.count)")
-                    success.forEach { print($0.id) }
-                    self.products = success.map { $0.toProduct() }
+                    let loadedProducts = success.map { $0.toProduct() }
+                    self.allProducts = loadedProducts
+                    self.products = loadedProducts
                 case .failure(let failure):
                     handleNetworkError(failure)
                 }
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
     
-    /**
-     This function retrieves a product from the server using its keywords.
-     - Parameter keywords: The keywords of the product to retrieve.
-     */
-    func searchStoreProductByKeywords(for keywords: String) {
+    func getProductByKeywords(for keywords: String) {
         guard !keywords.isEmpty else {
-            getProducts()
+            restoreAllProducts()
             return
         }
-        print("ViewModel | getProductByKeywords >> keywords: \(keywords)")
-        
-        searchStoreProductByKeywordsUseCase.invoke(
-            from: getUrl(endpoint: "maia-product", keywords: keywords)
-        )
-        .sink { (result: Result<[ProductDto], NetworkError>) in
-            switch result {
-            case .success(let success):
-                self.products = success.map { $0.toProduct() }
-            case .failure(let failure):
-                handleNetworkError(failure)
-            }
+        products = allProducts.filter { product in
+            searchProduct(product, matches: keywords)
         }
-        .store(in: &cancellables)
+    }
+    
+    private func searchProduct(_ product: Product, matches keywords: String) -> Bool {
+        let lowerQuery = keywords.lowercased()
+        return product.name.lowercased().contains(lowerQuery)
+        || (product.label?.lowercased().contains(lowerQuery) ?? false)
+        || product.description.lowercased().contains(lowerQuery)
+        || (product.owner?.lowercased().contains(lowerQuery) ?? false)
+        || product.model.lowercased().contains(lowerQuery)
+    }
+    
+    func restoreAllProducts() {
+        products = allProducts
     }
     
     /**
