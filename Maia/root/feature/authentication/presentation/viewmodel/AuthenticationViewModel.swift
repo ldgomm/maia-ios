@@ -101,3 +101,17 @@ func getFakeStore(_ id: String, name: String?) -> StoreDto {
                     createdAt: Date().currentTimeMillis(),
                     status: StatusDto(isActive: false, isVerified: false, isPromoted: false, isSuspended: false, isClosed: false, isPendingApproval: false, isUnderReview: false, isOutOfStock: false, isOnSale: false))
 }
+<<<<<<< HEAD
+=======
+
+
+/*
+// Retrieving JWT from Keychain
+if let token = KeychainHelper.shared.read(forKey: "jwt") {
+    print("Token retrieved: \(token)")
+}
+
+// Deleting JWT from Keychain
+KeychainHelper.shared.delete(forKey: "jwt")
+*/
+>>>>>>> 9bc6309cbc839293cadf9f509dceb149676dd5c0

@@ -6,6 +6,7 @@
   
 */
 
+<<<<<<< HEAD
 "information_label" = "Information";
 "details_label" = "Details";
 "warning_label" = "Warning";
@@ -15,6 +16,8 @@
 "with_interest" = "With Interest";
 "free_months" = "Free Months";
 
+=======
+>>>>>>> 9bc6309cbc839293cadf9f509dceb149676dd5c0
 "general_information_header" = "General Information";
 "name_label" = "Name";
 "name_prompt" = "Name";

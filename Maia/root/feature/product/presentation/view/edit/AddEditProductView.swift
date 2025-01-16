@@ -140,13 +140,21 @@ struct AddEditProductView: View {
                 
                 // Price Section
                 Section {
+<<<<<<< HEAD
                     TextField(NSLocalizedString("amount", comment: ""), text: $priceAmount)
                         .keyboardType(.decimalPad)
                     Picker(NSLocalizedString("currency", comment: ""), selection: $priceCurrency) {
+=======
+                    TextField(LocalizedStringKey("amount_label"), text: $priceAmount)
+                        .keyboardType(.decimalPad)
+
+                    Picker(LocalizedStringKey("currency_label"), selection: $priceCurrency) {
+>>>>>>> 9bc6309cbc839293cadf9f509dceb149676dd5c0
                         ForEach(["USD", "EUR", "GBP"], id: \.self) {
                             Text($0)
                         }
                     }
+<<<<<<< HEAD
                     
                     Toggle(NSLocalizedString("is_active", comment: ""), isOn: $offerIsActive)
                     Stepper("\(NSLocalizedString("discount", comment: "")): \(offerDiscount)%", value: $offerDiscount, in: 0...100, step: 1)
@@ -155,13 +163,33 @@ struct AddEditProductView: View {
                     Stepper("\(NSLocalizedString("free_months", comment: "")): \(creditCardFreeMonths) months", value: $creditCardFreeMonths, in: 0...12, step: 1)
                 } header: {
                     Text(NSLocalizedString("price", comment: ""))
+=======
+
+                    Toggle(LocalizedStringKey("is_active_label"), isOn: $offerIsActive)
+
+                    Stepper("\(LocalizedStringKey("discount_label")): \(offerDiscount)%", value: $offerDiscount, in: 0...100, step: 1)
+
+                    Stepper("\(LocalizedStringKey("with_interest_label")): \(creditCardWithInterest) \(LocalizedStringKey("months_label"))", value: $creditCardWithInterest, in: 3...48, step: 1)
+
+                    Stepper("\(LocalizedStringKey("without_interest_label")): \(creditCardWithoutInterest) \(LocalizedStringKey("months_label"))", value: $creditCardWithoutInterest, in: 0...24, step: 1)
+
+                    Stepper("\(LocalizedStringKey("free_months_label")): \(creditCardFreeMonths) \(LocalizedStringKey("months_label"))", value: $creditCardFreeMonths, in: 0...12, step: 1)
+                } header: {
+                    Text(LocalizedStringKey("price_section_label"))
+>>>>>>> 9bc6309cbc839293cadf9f509dceb149676dd5c0
                 }
 
                 // Stock section
                 Section {
+<<<<<<< HEAD
                     Stepper("\(NSLocalizedString("units_of_product", comment: "")): \(stock)", value: $stock, in: 1...100, step: 1)
                 } header: {
                     Text(NSLocalizedString("stock", comment: ""))
+=======
+                    Stepper("\(LocalizedStringKey("units_of_product_label")): \(stock)", value: $stock, in: 1...100, step: 1)
+                } header: {
+                    Text(LocalizedStringKey("stock_section_label"))
+>>>>>>> 9bc6309cbc839293cadf9f509dceb149676dd5c0
                 }
 
                 Section {
