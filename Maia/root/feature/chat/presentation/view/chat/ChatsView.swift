@@ -32,6 +32,7 @@ struct ChatsView: View {
                             } label: {
                                 ConversationItemView(message: lastMessage.toMessage(), sentOrDeliveredCount: sentOrDeliveredCount)
                             }
+                            .frame(height: 60)
                         }
                     }
                 }

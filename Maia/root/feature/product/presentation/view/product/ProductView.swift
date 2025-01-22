@@ -203,8 +203,6 @@ struct ProductView: View {
                 Alert(title: Text(LocalizedStringKey("delete_product_title")),
                       message: Text(LocalizedStringKey("delete_product_message")),
                       primaryButton: .destructive(Text(LocalizedStringKey("delete_button"))) {
-                    print("Delete called")
-
                     if let path = product.image.path, shouldDeletePath(path: path) {
                         if let path = product.image.path, !path.isEmpty {
                             deleteImageFromFirebase(for: path) {

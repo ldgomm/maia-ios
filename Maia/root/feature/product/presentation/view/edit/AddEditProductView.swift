@@ -23,9 +23,9 @@ struct AddEditProductView: View {
     @State private var model: String = "" //Done
     @State private var description: String = "" //Done
     
-    @State private var mi: String = "" //Done
-    @State private var ni: String = "" //Done
-    @State private var xi: String = "" //Done
+    @State private var group: String = "" //Done
+    @State private var domain: String = "" //Done
+    @State private var subclass: String = "" //Done
     
     @State private var stock: Int = 10 //Done
     
@@ -289,9 +289,9 @@ struct AddEditProductView: View {
         _year = State(wrappedValue: product.year ?? "2024")
         _model = State(wrappedValue: product.model)
         _description = State(wrappedValue: product.description)
-        _mi = State(wrappedValue: product.category.group)
-        _ni = State(wrappedValue: product.category.domain)
-        _xi = State(wrappedValue: product.category.subclass)
+        _group = State(wrappedValue: product.category.group)
+        _domain = State(wrappedValue: product.category.domain)
+        _subclass = State(wrappedValue: product.category.subclass)
         _stock = State(wrappedValue: product.stock)
         _origin = State(wrappedValue: product.origin)
         _oldMainImagePath = State(wrappedValue: product.image.path)
@@ -329,19 +329,19 @@ struct AddEditProductView: View {
             return
         }
         
-        guard !mi.isEmpty else {
+        guard !group.isEmpty else {
             alertMessage = NSLocalizedString("error_empty_group", comment: "Please select a group.")
             showAlert = true
             return
         }
         
-        guard !ni.isEmpty else {
+        guard !domain.isEmpty else {
             alertMessage = NSLocalizedString("error_empty_category", comment: "Please select a category.")
             showAlert = true
             return
         }
         
-        guard !xi.isEmpty else {
+        guard !subclass.isEmpty else {
             alertMessage = NSLocalizedString("error_empty_subcategory", comment: "Please select a subcategory.")
             showAlert = true
             return
@@ -401,7 +401,11 @@ struct AddEditProductView: View {
         if !mainImageHasChanged {
             if oldMainImageBelongs {
                 do {
-                    try viewModel.putProduct(product: toProduct(id: product.id, overview: overview, price: price))
+                    try viewModel.putProduct(product: toProduct(id: product.id, overview: overview, price: price)) { success in
+                        onSuccess(success)
+                    } onFailure: { failure in
+                        onFailure(failure)
+                    }
                 } catch {
                     print("Error posting product: \(error)")
                 }
@@ -409,7 +413,11 @@ struct AddEditProductView: View {
                 uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
                     let product = toProduct(id: product.id, info: imageInfo, price: price)
                     do {
-                        try viewModel.postProduct(product: product)
+                        try viewModel.postProduct(product: product) { success in
+                            onSuccess(success)
+                        } onFailure: { failure in
+                            onFailure(failure)
+                        }
                     } catch {
                         print("Error posting product: \(error)")
                     }
@@ -422,14 +430,22 @@ struct AddEditProductView: View {
                         uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
                             if oldMainImageBelongs {
                                 do {
-                                   try viewModel.putProduct(product: toProduct(id: product.id, info: imageInfo, price: price))
+                                   try viewModel.putProduct(product: toProduct(id: product.id, info: imageInfo, price: price)) { success in
+                                       onSuccess(success)
+                                   } onFailure: { failure in
+                                       onFailure(failure)
+                                   }
                                 } catch {
                                     print("Error posting product: \(error)")
                                 }
                             } else {
                                 let product = toProduct(id: product.id, info: imageInfo, price: price)
                                 do {
-                                    try viewModel.postProduct(product: product)
+                                    try viewModel.postProduct(product: product){ success in
+                                        onSuccess(success)
+                                    } onFailure: { failure in
+                                        onFailure(failure)
+                                    }
                                 } catch {
                                     print("Error posting product: \(error)")
                                 }
@@ -440,16 +456,15 @@ struct AddEditProductView: View {
             }
         }
         
-        dismiss()
-        popToRoot()
+        
     }
     
     private func toProduct(id: String, overview: [Information], price: Price) -> Product {
-        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: mi, domain: ni, subclass: xi), price: price, stock: stock, image: ImageX(path: oldMainImagePath, url: oldMainImageUrl, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
+        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: oldMainImagePath, url: oldMainImageUrl, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
     }
     
     private func toProduct(id: String, info imageInfo: ImageInfo, price: Price) -> Product {
-        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: mi, domain: ni, subclass: xi), price: price, stock: stock, image: ImageX(path: imageInfo.path, url: imageInfo.url, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
+        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: imageInfo.path, url: imageInfo.url, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
     }
     
     /**
@@ -497,5 +512,19 @@ struct AddEditProductView: View {
 //        if keywords?.isEmpty == true {
 //            keywords = nil
 //        }
+    }
+    
+    private func onSuccess(_ success: String) {
+        alertMessage = success
+        showAlert = true
+        dismiss()
+        popToRoot()
+    }
+    
+    private func onFailure(_ failure: String) {
+        alertMessage = failure
+        showAlert = true
+        dismiss()
+        popToRoot()
     }
 }

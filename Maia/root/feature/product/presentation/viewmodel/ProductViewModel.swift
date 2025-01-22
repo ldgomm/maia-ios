@@ -27,11 +27,8 @@ final class ProductViewModel: ObservableObject {
     
     let searchMainProductByKeywordsUseCase: SearchProductByKeywordsUseCase = .init()
     let getGroupsUseCase: GetGroupsUseCase = .init()
-    
-    //    let user: String?
-    
+        
     init() {
-        //        self.user = Auth.auth().currentUser?.uid
         getProducts()
         getCategories()
         
@@ -45,7 +42,10 @@ final class ProductViewModel: ObservableObject {
      This function retrieves all products from the server.
      */
     func getProducts() {
+        self.allProducts = []
+        self.products = []
         getProductsUseCase.invoke(from: getUrl(endpoint: "maia-product"))
+            .receive(on: DispatchQueue.main)
             .sink { (result: Result<[ProductDto], NetworkError>) in
                 switch result {
                 case .success(let success):
@@ -53,7 +53,7 @@ final class ProductViewModel: ObservableObject {
                     self.allProducts = loadedProducts
                     self.products = loadedProducts
                 case .failure(let failure):
-                    handleNetworkError(failure)
+                    print(handleNetworkError(failure))
                 }
             }
             .store(in: &cancellables)
@@ -84,25 +84,17 @@ final class ProductViewModel: ObservableObject {
             return (product, matchCount)
         }
         
-        // 2) Filter out products that have zero matches
-        //    (i.e., keep products with matchCount >= 1)
-        let matchingProducts = productsWithMatchCount
-            .filter { $0.matchCount > 0 }
-        
-        // 3) Sort the resulting products by matchCount, descending
+        let matchingProducts = productsWithMatchCount.filter { $0.matchCount > 0 }
         let sortedByMatches = matchingProducts.sorted { $0.matchCount > $1.matchCount }
-        
-        // 4) Extract just the Product objects in sorted order
         products = sortedByMatches.map { $0.product }
     }
-
+    
     private func fieldMatches(_ product: Product, term: String) -> Bool {
         product.name.lowercased().contains(term)
         || (product.label?.lowercased().contains(term) ?? false)
         || product.description.lowercased().contains(term)
         || (product.owner?.lowercased().contains(term) ?? false)
         || product.model.lowercased().contains(term)
-        // ... add more fields if needed
     }
     
     func restoreAllProducts() {
@@ -124,6 +116,7 @@ final class ProductViewModel: ObservableObject {
         searchMainProductByKeywordsUseCase.invoke(
             from: getUrl(endpoint: "maia-product/products", keywords: keywords)
         )
+        .receive(on: DispatchQueue.main)
         .sink { (result: Result<[ProductDto], NetworkError>) in
             switch result {
             case .success(let success):
@@ -132,7 +125,7 @@ final class ProductViewModel: ObservableObject {
                     !self.products.contains(where: { $0.id == newProduct.id })
                 }
             case .failure(let failure):
-                handleNetworkError(failure)
+                print(handleNetworkError(failure))
             }
         }
         .store(in: &cancellables)
@@ -142,17 +135,20 @@ final class ProductViewModel: ObservableObject {
      This function creates a new product on the server using the provided Product object.
      - Parameter product: The Product object to create.
      */
-    func postProduct(product: Product) throws {
+    func postProduct(product: Product,
+                     onSuccess: @escaping (String) -> Void,
+                     onFailure: @escaping (String) -> Void) throws {
         postProductUseCase.invoke(
             from: getUrl(endpoint: "maia-product"),
             with: PostProductRequest(product: product.toProductDto())
         )
+        .receive(on: DispatchQueue.main)
         .sink { (result: Result<MessageResponse, NetworkError>) in
             switch result {
-            case .success(let data):
-                print("Success adding product: \(data.message)")
+            case .success(let success):
+                onSuccess(success.message)
             case .failure(let failure):
-                handleNetworkError(failure)
+                onFailure(handleNetworkError(failure))
             }
         }
         .store(in: &cancellables)
@@ -162,21 +158,29 @@ final class ProductViewModel: ObservableObject {
      This function updates a product on the server using the provided Product object.
      - Parameter product: The Product object to update.
      */
-    func putProduct(product: Product) throws {
+    func putProduct(product: Product,
+                    onSuccess: @escaping (String) -> Void,
+                    onFailure: @escaping (String) -> Void) throws {
         putProductUseCase.invoke(
             from: getUrl(endpoint: "maia-product"),
             with: PutProductRequest(product: product.toProductDto())
         )
+        .receive(on: DispatchQueue.main)
         .sink { (result: Result<MessageResponse, NetworkError>) in
             switch result {
             case .success(let success):
-                print(success)
+                onSuccess(success.message)
+                // Clear out old data, then re-fetch
+                self.products.removeAll()
+                self.searchProducts.removeAll()
+                self.getProducts()
             case .failure(let failure):
-                handleNetworkError(failure)
+                onFailure(handleNetworkError(failure))
             }
         }
         .store(in: &cancellables)
     }
+
     
     /**
      This function deletes a product from the server using its ID.
@@ -191,13 +195,15 @@ final class ProductViewModel: ObservableObject {
             from: getUrl(endpoint: "maia-product"),
             with: DeleteProductRequest(productId: product.id)
         )
+        .receive(on: DispatchQueue.main)
         .sink { (result: Result<MessageResponse, NetworkError>) in
             switch result {
             case .success(let success):
                 onSuccess(success.message)
                 self.products.removeAll { $0.id == product.id }
             case .failure(let failure):
-                handleNetworkError(failure)
+                onFailure(failure.localizedDescription)
+                onFailure(handleNetworkError(failure))
             }
         }
         .store(in: &cancellables)
@@ -206,15 +212,15 @@ final class ProductViewModel: ObservableObject {
     func getCategories() {
         groups.removeAll()
         getGroupsUseCase.invoke(from: getUrl(endpoint: "data/groups"))
+            .receive(on: DispatchQueue.main)
             .sink { (result: Result<[Group], NetworkError>) in
                 switch result {
                 case .success(let success):
                     self.groups = success
                 case .failure(let failure):
-                    handleNetworkError(failure)
+                    print(handleNetworkError(failure))
                 }
             }
             .store(in: &cancellables)
     }
 }
-

@@ -26,6 +26,7 @@ struct ConversationItemView: View {
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .lineLimit(2)
+                    .padding(.top, 2)
             }
             Spacer()
             VStack {
