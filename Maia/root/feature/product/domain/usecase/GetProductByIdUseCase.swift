@@ -1,6 +1,6 @@
 //
 //  GetProductByIdUseCase.swift
-//  Sales
+//  Maia
 //
 //  Created by José Ruiz on 8/5/24.
 //

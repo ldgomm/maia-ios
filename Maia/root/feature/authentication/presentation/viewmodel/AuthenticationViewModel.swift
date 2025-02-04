@@ -71,10 +71,8 @@ class AuthenticationViewModel: ObservableObject {
                     KeychainHelper.shared.save(success.token, forKey: "jwt")
                     UserDefaults.standard.set(true, forKey: "isAuthenticated")
                     completion(true, nil)
-                    //Manage sign out pending
                 case .failure(let failure):
-                    completion(false, failure.localizedDescription)
-                    handleNetworkError(failure)
+                    completion(false, handleNetworkError(failure))
                 }
             }
             .store(in: &cancellables)

@@ -400,14 +400,19 @@ struct AddEditProductView: View {
         let price = Price(amount: priceAmountValue, currency: priceCurrency, offer: Offer(isActive: offerIsActive, discount: offerDiscount), creditCard: CreditCard(withoutInterest: creditCardWithoutInterest, withInterest: creditCardWithInterest, freeMonths: creditCardFreeMonths))
         if !mainImageHasChanged {
             if oldMainImageBelongs {
+                let pro = toProduct(id: product.id, overview: overview, price: price)
+
                 do {
-                    try viewModel.putProduct(product: toProduct(id: product.id, overview: overview, price: price)) { success in
-                        onSuccess(success)
-                    } onFailure: { failure in
-                        onFailure(failure)
+                    try viewModel.putProduct(product: pro) { successMessage in
+                        print("Name: \(pro.name)")
+                        onSuccess(successMessage)
+                        viewModel.removeAllProducts()
+//                        viewModel.addProduct(pro)
+                    } onFailure: { errorMessage in
+                        onFailure(errorMessage)
                     }
                 } catch {
-                    print("Error posting product: \(error)")
+                    onFailure(error.localizedDescription)
                 }
             } else {
                 uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
@@ -429,8 +434,9 @@ struct AddEditProductView: View {
                     deleteImageFromFirebase(for: oldMainImagePath) {
                         uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
                             if oldMainImageBelongs {
+                                let pro = toProduct(id: product.id, info: imageInfo, price: price)
                                 do {
-                                   try viewModel.putProduct(product: toProduct(id: product.id, info: imageInfo, price: price)) { success in
+                                   try viewModel.putProduct(product: pro) { success in
                                        onSuccess(success)
                                    } onFailure: { failure in
                                        onFailure(failure)

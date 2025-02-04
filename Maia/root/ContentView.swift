@@ -17,16 +17,16 @@ struct ContentView: View {
         TabView {
             ProductsView()
                 .environmentObject(productViewModel)
-                .tabItem { Label("Products", systemImage: "menucard") }
+                .tabItem { Label(LocalizedStringKey("my_products_navigation_title"), systemImage: "menucard") }
             SearchView()
                 .environmentObject(productViewModel)
-                .tabItem { Label("Search", systemImage: "magnifyingglass") }
+                .tabItem { Label(LocalizedStringKey("search_navigation_title"), systemImage: "magnifyingglass") }
             ChatsView()
                 .environmentObject(chatViewModel)
-                .tabItem { Label("Chats", systemImage: "message") }
+                .tabItem { Label(LocalizedStringKey("chats_label"), systemImage: "message") }
             StoreView()
                 .environmentObject(settingsViewModel)
-                .tabItem { Label("Settings", systemImage: "gear") }
+                .tabItem { Label(LocalizedStringKey("profile_label"), systemImage: "person") }
         }
     }
     

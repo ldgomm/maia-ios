@@ -15,7 +15,7 @@ struct ProductRowView: View {
     var body: some View {
         NavigationLink(value: product) {
             HStack {
-                ImageWithRetry(url: URL(string: product.image.url)!)
+                CachedAsyncImageWithRetry(url: URL(string: product.image.url)!)
                     .frame(width: 70, height: 70)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
@@ -71,7 +71,7 @@ struct ProductRowView: View {
     }
 }
 
-struct ImageWithRetry: View {
+struct CachedAsyncImageWithRetry: View {
     let url: URL
     @State private var retryCount = 0
     private let maxRetries = 3
@@ -81,13 +81,13 @@ struct ImageWithRetry: View {
             switch phase {
             case .empty:
                 ProgressView()
-                    .frame(width: 70, height: 70)
+//                    .frame(width: 70, height: 70)
             case .success(let image):
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 70, height: 70)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+//                    .frame(width: 70, height: 70)
+//                    .clipShape(RoundedRectangle(cornerRadius: 10))
             case .failure:
                 if retryCount < maxRetries {
                     Button(action: {
@@ -96,14 +96,14 @@ struct ImageWithRetry: View {
                         Image(systemName: "arrow.clockwise")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 70, height: 70)
+//                            .frame(width: 70, height: 70)
                             .foregroundColor(.gray)
                     }
                 } else {
                     Image(systemName: "photo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 70, height: 70)
+//                        .frame(width: 70, height: 70)
                         .foregroundColor(.gray)
                 }
             @unknown default:

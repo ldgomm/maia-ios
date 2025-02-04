@@ -17,7 +17,7 @@ struct ProductItemView: View {
                     ChrismasCardView()
                 }
                 HStack {
-                    ImageWithRetry(url: URL(string: product.image.url)!)
+                    CachedAsyncImageWithRetry(url: URL(string: product.image.url)!)
                         .frame(width: 70, height: 70)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     VStack(alignment: .leading) {

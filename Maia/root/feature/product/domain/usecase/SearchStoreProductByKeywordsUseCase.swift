@@ -1,6 +1,6 @@
 //
 //  GetDataByKeywordsUseCase.swift
-//  Sales
+//  Maia
 //
 //  Created by José Ruiz on 22/5/24.
 //

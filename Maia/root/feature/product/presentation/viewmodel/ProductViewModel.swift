@@ -42,8 +42,6 @@ final class ProductViewModel: ObservableObject {
      This function retrieves all products from the server.
      */
     func getProducts() {
-        self.allProducts = []
-        self.products = []
         getProductsUseCase.invoke(from: getUrl(endpoint: "maia-product"))
             .receive(on: DispatchQueue.main)
             .sink { (result: Result<[ProductDto], NetworkError>) in
@@ -59,22 +57,17 @@ final class ProductViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    // Filter the array by multiple keywords across multiple fields
     func getProductByKeywords(for keywords: String) {
-        // If there’s no input, restore the original full list
         guard !keywords.isEmpty else {
             restoreAllProducts()
             return
         }
         
-        // Split input into separate search terms
-        // e.g., "cronos bike black" -> ["cronos", "bike", "black"]
         let terms = keywords
             .lowercased()
             .split(separator: " ")
             .map(String.init)
         
-        // 1) For each product, figure out how many of the 'terms' match
         let productsWithMatchCount = allProducts.map { product -> (product: Product, matchCount: Int) in
             let matchCount = terms.reduce(into: 0) { count, term in
                 if fieldMatches(product, term: term) {
@@ -169,19 +162,25 @@ final class ProductViewModel: ObservableObject {
         .sink { (result: Result<MessageResponse, NetworkError>) in
             switch result {
             case .success(let success):
+                self.updateProduct(product)
                 onSuccess(success.message)
-                // Clear out old data, then re-fetch
-                self.products.removeAll()
-                self.searchProducts.removeAll()
-                self.getProducts()
             case .failure(let failure):
                 onFailure(handleNetworkError(failure))
             }
         }
         .store(in: &cancellables)
     }
-
     
+    func updateProduct(_ product: Product) {
+        if let index = self.products.firstIndex(where: { $0.id == product.id }) {
+            self.products.remove(at: index)
+        }
+    }
+    
+//    func addProduct(_ product: Product) {
+//        self.products.append(product)
+//    }
+//    
     /**
      This function deletes a product from the server using its ID.
      - Parameter id: The ID of the product to delete.
@@ -202,7 +201,6 @@ final class ProductViewModel: ObservableObject {
                 onSuccess(success.message)
                 self.products.removeAll { $0.id == product.id }
             case .failure(let failure):
-                onFailure(failure.localizedDescription)
                 onFailure(handleNetworkError(failure))
             }
         }
