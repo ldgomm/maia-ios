@@ -14,11 +14,11 @@ func handleNetworkError(_ failure: NetworkError) -> String {
     // Switch on the specific type of NetworkError to print a corresponding error message
     switch failure {
     case .decodeError(let underlying):
-        print("Decode error: \(failure.localizedDescription)")
+        print("Decode error: \(String(describing: underlying?.localizedDescription))")
         return "File format error: Check file content"
         
     case .downloadError(let underlying):
-        print("Decode error: \(failure.localizedDescription)")
+        print("Decode error: \(String(describing: underlying?.localizedDescription))")
         return "Error downloading file: Check internet connection"
         
     case .notFoundError:

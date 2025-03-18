@@ -163,7 +163,7 @@ struct ProductView: View {
                 
                 if let warranty = product.warranty {
                     SectionView(title: NSLocalizedString("warranty_label", comment: "")) {
-                        ProductDetailRow(label: String(format: NSLocalizedString("for_months_label", comment: ""), warranty.months), value: warranty.details.joined(separator: ", "))
+                        Text(warranty)
                     }
                 }
                 
@@ -204,17 +204,18 @@ struct ProductView: View {
                       message: Text(LocalizedStringKey("delete_product_message")),
                       primaryButton: .destructive(Text(LocalizedStringKey("delete_button"))) {
                     if let path = product.image.path, shouldDeletePath(path: path) {
+                        print("Path: \(path)")
                         if let path = product.image.path, !path.isEmpty {
                             deleteImageFromFirebase(for: path) {
                                 print("Main image deleted")
+                                viewModel.deleteProduct(product: product) { message in
+                                    print("Product deleted: \(message)")
+                                    dismiss()
+                                } onFailure: { failure in
+                                    print("Failure: \(failure)")
+                                }
                             }
                         }
-                        viewModel.deleteProduct(product: product) { message in
-                            print("In view product deleted: \(message)")
-                        } onFailure: { failure in
-                            print("Failure: \(failure)")
-                        }
-                        dismiss()
                     } else {
                         print("Error deleting product")
                     }

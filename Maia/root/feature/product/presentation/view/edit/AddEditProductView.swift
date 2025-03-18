@@ -49,8 +49,9 @@ struct AddEditProductView: View {
     @State private var specifications: Specifications?
     @State private var addSpecifications: Bool = false
     
-    @State private var warranty: Warranty?
-    @State private var addWarranty: Bool = false
+    @State private var codes: Codes?
+    
+    @State private var warranty: String?
     
     @State private var legal: String? //Done
     @State private var warning: String? //Done
@@ -69,6 +70,13 @@ struct AddEditProductView: View {
     @State private var creditCardWithInterest: Int = 12
     @State private var creditCardWithoutInterest: Int = 3
     @State private var creditCardFreeMonths: Int = 0
+    
+    // State variables for upload progress
+    @State private var uploadProgress: Double = 0.0
+    @State private var isUploading = false
+    
+    @State private var showRequestAlert = false
+    @State private var alertRequestMessage = ""
     
     let user: String
     
@@ -199,18 +207,19 @@ struct AddEditProductView: View {
                     Text(LocalizedStringKey("specifications_section_label"))
                 }
 
-                Section {
-                    Button(LocalizedStringKey("submit_warranty_label")) {
-                        self.addWarranty.toggle()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                } header: {
-                    Text(LocalizedStringKey("warranty_section_label"))
-                }
-
                 // Legal and warning information section
                 Section(header: Text(LocalizedStringKey("legal_and_warning_section_label"))) {
                     VStack(alignment: .leading) {
+                        
+                        Text(LocalizedStringKey("warranty_section_label"))
+                            .font(.headline)
+                        TextEditor(text: Binding(
+                            get: { self.warranty ?? "" },
+                            set: { self.warranty = self.limitText($0) }
+                        ))
+                        .frame(height: 100)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5), lineWidth: 0.5))
+
                         Text(LocalizedStringKey("enter_legal_info"))
                             .font(.headline)
                         TextEditor(text: Binding(
@@ -235,12 +244,20 @@ struct AddEditProductView: View {
                     Button(oldMainImageBelongs ? LocalizedStringKey("update_label") : LocalizedStringKey("create_label")) {
                         validateAndSaveProduct()
                     }
+                    .disabled(isUploading)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    if isUploading {
+                        ProgressView(value: uploadProgress)
+                            .progressViewStyle(LinearProgressViewStyle())
+                            .padding()
+                        Text(NSLocalizedString("uploading", comment: ""))
+                    }
                 } footer: {
                     Text(LocalizedStringKey("submit_footer"))
                 }
 
             }
+            .navigationTitle(name.isEmpty ? String(localized: "product_title") : name)
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: photosPickerItem) {
                 Task {
@@ -264,18 +281,18 @@ struct AddEditProductView: View {
                     self.specifications = newSpecifications
                 }
             }
-            .sheet(isPresented: $addWarranty) {
-                AddEditWarranty(warranty: warranty) { newWarranty in
-                    self.warranty = newWarranty
-                }
-            }
-            .navigationTitle(name.isEmpty ? String(localized: "product_title") : name)
-            .navigationBarTitleDisplayMode(.inline)
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text(LocalizedStringKey("validation_error_title")),
                     message: Text(alertMessage),
                     dismissButton: .default(Text(LocalizedStringKey("ok_button")))
+                )
+            }
+            .alert(isPresented: $showRequestAlert) {
+                Alert(
+                    title: Text("Product alert"),
+                    message: Text(alertRequestMessage),
+                    dismissButton: .default(Text("Accept"))
                 )
             }
         }
@@ -299,6 +316,7 @@ struct AddEditProductView: View {
         _oldMainImageBelongs = State(wrappedValue: product.image.belongs)
         _overview = State(wrappedValue: product.overview)
         _keywords = State(wrappedValue: product.keywords ?? [])
+        _codes = State(wrappedValue: product.codes ?? Codes(EAN: ""))
         _specifications = State(wrappedValue: product.specifications)
         _warranty = State(wrappedValue: product.warranty)
         _legal = State(wrappedValue: product.legal)
@@ -395,19 +413,17 @@ struct AddEditProductView: View {
             return
         }
         
-        let path = "sales/stores/images/\(Auth.auth().currentUser!.uid)/\(UUID().uuidString).jpg"
-        
         let price = Price(amount: priceAmountValue, currency: priceCurrency, offer: Offer(isActive: offerIsActive, discount: offerDiscount), creditCard: CreditCard(withoutInterest: creditCardWithoutInterest, withInterest: creditCardWithInterest, freeMonths: creditCardFreeMonths))
+        let path = "fake/stores/images/\(Auth.auth().currentUser!.uid)/\(UUID().uuidString).jpg"
+        
         if !mainImageHasChanged {
             if oldMainImageBelongs {
                 let pro = toProduct(id: product.id, overview: overview, price: price)
-
                 do {
                     try viewModel.putProduct(product: pro) { successMessage in
                         print("Name: \(pro.name)")
                         onSuccess(successMessage)
                         viewModel.removeAllProducts()
-//                        viewModel.addProduct(pro)
                     } onFailure: { errorMessage in
                         onFailure(errorMessage)
                     }
@@ -415,39 +431,20 @@ struct AddEditProductView: View {
                     onFailure(error.localizedDescription)
                 }
             } else {
-                uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
-                    let product = toProduct(id: product.id, info: imageInfo, price: price)
-                    do {
-                        try viewModel.postProduct(product: product) { success in
-                            onSuccess(success)
-                        } onFailure: { failure in
-                            onFailure(failure)
-                        }
-                    } catch {
-                        print("Error posting product: \(error)")
-                    }
+                guard let compressedImageData = image?.compressImage() else {
+                    print("Failed to compress image")
+                    return
                 }
-            }
-        } else {
-            if let oldMainImagePath {
-                if shouldDeletePath(path: oldMainImagePath) {
-                    deleteImageFromFirebase(for: oldMainImagePath) {
-                        uploadImageToFirebase(for: path, with: (image?.compressImage())!) { imageInfo in
-                            if oldMainImageBelongs {
-                                let pro = toProduct(id: product.id, info: imageInfo, price: price)
-                                do {
-                                   try viewModel.putProduct(product: pro) { success in
-                                       onSuccess(success)
-                                   } onFailure: { failure in
-                                       onFailure(failure)
-                                   }
-                                } catch {
-                                    print("Error posting product: \(error)")
-                                }
-                            } else {
+                isUploading = true
+
+                uploadImageToFirebaseWithProcessHandler(for: path, with: compressedImageData, progressHandler: { progress in
+                    DispatchQueue.main.async { self.uploadProgress = progress }}) { imageInfo in
+                        DispatchQueue.main.async {
+                            self.isUploading = false
+                            if let imageInfo = imageInfo {
                                 let product = toProduct(id: product.id, info: imageInfo, price: price)
                                 do {
-                                    try viewModel.postProduct(product: product){ success in
+                                    try viewModel.postProduct(product: product) { success in
                                         onSuccess(success)
                                     } onFailure: { failure in
                                         onFailure(failure)
@@ -455,22 +452,72 @@ struct AddEditProductView: View {
                                 } catch {
                                     print("Error posting product: \(error)")
                                 }
+                            } else {
+                                print("Failed to upload image")
                             }
                         }
                     }
+            }
+        } else {
+            if let oldMainImagePath {
+                if shouldDeletePath(path: oldMainImagePath) {
+                    deleteImageFromFirebase(for: oldMainImagePath) {
+                        
+                        guard let compressedImageData = image?.compressImage() else {
+                            print("Failed to compress image")
+                            return
+                        }
+                        isUploading = true
+
+                        uploadImageToFirebaseWithProcessHandler(for: path, with: compressedImageData, progressHandler: { progress in
+                            DispatchQueue.main.async { self.uploadProgress = progress }}) { imageInfo in
+                                DispatchQueue.main.async {
+                                    self.isUploading = false
+                                    if let imageInfo = imageInfo {
+                                        if oldMainImageBelongs {
+                                            let pro = toProduct(id: product.id, info: imageInfo, price: price)
+                                            do {
+                                                try viewModel.putProduct(product: pro) { success in
+                                                    onSuccess(success)
+                                                } onFailure: { failure in
+                                                    onFailure(failure)
+                                                }
+                                            } catch {
+                                                print("Error posting product: \(error)")
+                                            }
+                                        } else {
+                                            let product = toProduct(id: product.id, info: imageInfo, price: price)
+                                            do {
+                                                try viewModel.postProduct(product: product){ success in
+                                                    onSuccess(success)
+                                                } onFailure: { failure in
+                                                    onFailure(failure)
+                                                }
+                                            } catch {
+                                                print("Error posting product: \(error)")
+                                            }
+                                        }
+                                    } else {
+                                        print("Failed to upload image")
+                                    }
+                                }
+                            }
+                    }
+                } else {
+                    print("Path should not be deleted")
                 }
+            } else {
+                print("oldMainImagePath is nil")
             }
         }
-        
-        
     }
     
     private func toProduct(id: String, overview: [Information], price: Price) -> Product {
-        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: oldMainImagePath, url: oldMainImageUrl, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
+        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: oldMainImagePath, url: oldMainImageUrl, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, codes: codes, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
     }
     
     private func toProduct(id: String, info imageInfo: ImageInfo, price: Price) -> Product {
-        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: imageInfo.path, url: imageInfo.url, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
+        return Product(id: id, name: name, label: label, owner: owner, year: year, model: model, description: description, category: Category(group: group, domain: domain, subclass: subclass), price: price, stock: stock, image: ImageX(path: imageInfo.path, url: imageInfo.url, belongs: true), origin: origin, date: Date().currentTimeMillis(), overview: overview, keywords: keywords, codes: codes, specifications: specifications, warranty: warranty, legal: legal, warning: warning, storeId: user)
     }
     
     /**

@@ -17,7 +17,7 @@ class AuthenticationViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable> = []
     
     @Published var isAuthenticated: Bool = false
-    @Published var isLoading: Bool = false
+//    @Published var isLoading: Bool = false
 
     func signIn(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
             // Validate email format
@@ -31,12 +31,10 @@ class AuthenticationViewModel: ObservableObject {
                 return
             }
 
-            isLoading = true
             Task {
                 do {
                     let result = try await Auth.auth().signIn(withEmail: email, password: password)
                     DispatchQueue.main.async { [self] in
-                        self.isLoading = false
                         self.isAuthenticated = true
                         if result.user.uid != "" {
                             print("Success to login")
@@ -46,7 +44,6 @@ class AuthenticationViewModel: ObservableObject {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        self.isLoading = false
                         self.isAuthenticated = false
                         completion(false, error.localizedDescription)
                         print("Error signing in: \(error.localizedDescription)")

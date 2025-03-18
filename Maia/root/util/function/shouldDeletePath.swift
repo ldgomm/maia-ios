@@ -20,7 +20,7 @@ func shouldDeletePath(path: String) -> Bool {
     guard let id = Auth.auth().currentUser?.uid else { return false }
     
     // Construct the base path using the current user's UID
-    let basePath = "sales/stores/images/\(id)"
+    let basePath = "fake/stores/images/\(id)"
     
     // Check if the path starts with the base path and has additional characters beyond the base path
     return path.hasPrefix("\(basePath)/") && path.count > basePath.count
