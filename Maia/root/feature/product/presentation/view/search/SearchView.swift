@@ -66,22 +66,7 @@ struct SearchView: View {
             }
             .searchable(text: $searchText)
             .onChange(of: searchText) { _, newValue in
-                // 1) Split into words
-                let words = newValue
-                    .split(separator: " ")
-                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-
-                // 2) Filter for words of length > 4
-                let filteredWords = words.filter { $0.count >= 4 }
-
-                // 3) If there's at least one long-enough word, call the search method
-                if !filteredWords.isEmpty {
-                    // Join them back into a string if needed by your backend
-                    let joinedWords = filteredWords.joined(separator: " ")
-                    viewModel.searchMainProductByKeywords(for: joinedWords)
-                } else {
-                    // You can decide what to do otherwise, e.g. clear results, do nothing, etc.
-                }
+                viewModel.searchMainProductByKeywords(for: newValue)
             }
 
             .navigationTitle(LocalizedStringKey("search_navigation_title"))
