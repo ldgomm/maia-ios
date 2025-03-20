@@ -141,9 +141,7 @@ final class ProductViewModel: ObservableObject {
      This function retrieves a product from the server using its keywords.
      - Parameter keywords: The keywords of the product to retrieve.
      */
-    func searchMainProductByKeywords(for keywords: String) {
-        print("Keywords called")
-                
+    func searchMainProductByKeywords(for keywords: String) {                
         searchMainProductByKeywordsUseCase.invoke(
             from: getUrl(endpoint: "maia-product/products", keywords: keywords)
         )

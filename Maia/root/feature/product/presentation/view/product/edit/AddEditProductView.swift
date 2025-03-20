@@ -112,9 +112,10 @@ struct AddEditProductView: View {
                         .autocapitalization(.none)
                         .disableAutocorrection(false)
                     
-                    TextField(LocalizedStringKey("owner_label"), text: $owner, prompt: Text(LocalizedStringKey("owner_prompt")))
-                        .autocapitalization(.none)
-                        .disableAutocorrection(false)
+//                    TextField(LocalizedStringKey("owner_label"), text: $owner, prompt: Text(LocalizedStringKey("owner_prompt")))
+//                        .autocapitalization(.none)
+//                        .disableAutocorrection(false)
+//                        .disabled(true)
                     
                     TextField(
                         NSLocalizedString("year_label", comment: ""),
@@ -127,21 +128,31 @@ struct AddEditProductView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(false)
                     
-                    TextField(LocalizedStringKey("model_label"), text: $model, prompt: Text(LocalizedStringKey("model_prompt")))
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
+//                    TextField(LocalizedStringKey("model_label"), text: $model, prompt: Text(LocalizedStringKey("model_prompt")))
+//                        .autocapitalization(.none)
+//                        .disableAutocorrection(true)
+//                        .disabled(true)
 
-                    TextField(LocalizedStringKey("description_label"), text: $description, prompt: Text(LocalizedStringKey("description_prompt")))
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
+//                    Picker(LocalizedStringKey("origin_label"), selection: $origin) {
+//                        ForEach(madeIn, id: \.self) { country in
+//                            Text(country)
+//                        }
+//                    }.disabled(true)
 
-                    Picker(LocalizedStringKey("origin_label"), selection: $origin) {
-                        ForEach(madeIn, id: \.self) { country in
-                            Text(country)
-                        }
-                    }
                 } header: {
                     Text(LocalizedStringKey("general_information_header"))
+                }
+                
+                Section {
+                    VStack(alignment: .leading) {
+                        Text(LocalizedStringKey("description_label"))
+                            .font(.headline)
+                        TextEditor(text: $description)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .frame(height: 100)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5), lineWidth: 0.5))
+                    }
                 }
 
 
@@ -198,14 +209,14 @@ struct AddEditProductView: View {
                     Text(LocalizedStringKey("keywords_footer"))
                 }
 
-                Section {
-                    Button(LocalizedStringKey("submit_specifications_label")) {
-                        self.addSpecifications.toggle()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                } header: {
-                    Text(LocalizedStringKey("specifications_section_label"))
-                }
+//                Section {
+//                    Button(LocalizedStringKey("submit_specifications_label")) {
+//                        self.addSpecifications.toggle()
+//                    }
+//                    .frame(maxWidth: .infinity, alignment: .center)
+//                } header: {
+//                    Text(LocalizedStringKey("specifications_section_label"))
+//                }
 
                 // Legal and warning information section
                 Section(header: Text(LocalizedStringKey("legal_and_warning_section_label"))) {

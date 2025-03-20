@@ -10,7 +10,8 @@ import SwiftUI
 struct SearchView: View {
     @EnvironmentObject var viewModel: ProductViewModel
     @State private var searchText: String = ""
-    
+    @State private var searchWorkItem: DispatchWorkItem?
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -66,7 +67,14 @@ struct SearchView: View {
             }
             .searchable(text: $searchText)
             .onChange(of: searchText) { _, newValue in
-                viewModel.searchMainProductByKeywords(for: newValue)
+                searchWorkItem?.cancel()
+                let newWorkItem = DispatchWorkItem {
+                    if newValue.count >= 4 {
+                        viewModel.searchMainProductByKeywords(for: newValue)
+                    }
+                }
+                searchWorkItem = newWorkItem
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: newWorkItem)
             }
 
             .navigationTitle(LocalizedStringKey("search_navigation_title"))
