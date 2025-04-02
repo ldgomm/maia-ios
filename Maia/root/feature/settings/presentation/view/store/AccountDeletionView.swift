@@ -12,45 +12,56 @@ struct AccountDeletionView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 
-                // Section 1: Deletion Process
+                // Title
+                Text("Account Deletion")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .padding(.top)
+
+                // Section 1: Deletion Policy
                 Text("""
-                    If you wish to delete your account in Maia, you can do so within the app by navigating to the Settings section. In the Configurations menu, you will find an option to request the deletion of your account.
-                    """)
+                Maia accounts are created manually by our admin team. To ensure the security and integrity of account data—especially with multiple-device access—users must request account deletion directly.
+                """)
                 .font(.body)
-                
-                // Section 2: Important Note
+
+                // Section 2: How to Request Deletion
                 Text("""
-                    Please note: Deleting your account is an irreversible action. This process will permanently delete your account, including all store data and products associated with your account. Once deleted, this information cannot be recovered.
-                    """)
+                If you wish to request the deletion of your account or personal data, please contact our support team by sending an email to:
+                """)
+                .font(.body)
+
+                Text("support@premierdarkcoffee.com")
+                    .font(.body)
+                    .foregroundColor(.blue)
+                    .underline()
+
+                // Section 3: Important Notice
+                Text("""
+                ⚠️ Please note: Account deletion is permanent and cannot be undone. All account information, including any associated data, will be permanently removed once verified.
+                """)
                 .font(.body)
                 .fontWeight(.bold)
-                
-                // Section 3: Backup Recommendation
+
+                // Section 4: Security and Verification
                 Text("""
-                    Before proceeding with account deletion, we recommend that you ensure you have backed up any necessary data or information, as we will not be able to restore it once the deletion process is completed.
-                    """)
+                For security purposes and to prevent unauthorized deletion, all requests must be verified manually by our support team. This helps ensure data privacy and avoid misunderstandings, especially on shared accounts or multiple-device logins.
+                """)
                 .font(.body)
-                
-                // Section 4: Contact Information
+
+                // Section 5: Response Time
                 Text("""
-                    If you have any questions or need assistance, please contact us at account@premierdarkcoffee.com.
-                    """)
+                We aim to respond to all account deletion requests as quickly as possible. Please allow up to 48 hours for a response due to operational flow.
+                """)
                 .font(.body)
-                .foregroundColor(.blue)
-                
-                // Section 5: Response Time Notice
-                Text("""
-                    Please note that while we strive to respond to all inquiries as quickly as possible, there may be times when responses take a couple of days to be attended due to operational constraints. We appreciate your patience and understanding.
-                    """)
-                .font(.body)
-                
+
                 // Footer
-                Text("© 2024 Maia, Premier Dark Coffee. All Rights Reserved.")
+                Text("© 2025 Maia, Premier Dark Coffee. All Rights Reserved.")
                     .font(.footnote)
+                    .foregroundColor(.secondary)
                     .padding(.top, 50)
             }
             .padding(.horizontal)
-            .navigationTitle("Account Deletion")
         }
+        .navigationTitle("Account Deletion")
     }
 }
