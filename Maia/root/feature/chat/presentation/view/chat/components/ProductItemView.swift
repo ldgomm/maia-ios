@@ -12,10 +12,10 @@ struct ProductItemView: View {
     
     var body: some View {
         NavigationLink(value: product) {
-            ZStack {
-                if product.price.offer.isActive {
-                    ChrismasCardView()
-                }
+//            ZStack {
+//                if product.price.offer.isActive {
+//                    ChrismasCardView()
+//                }
                 HStack {
                     CachedAsyncImageWithRetry(url: URL(string: product.image.url)!)
                         .frame(width: 70, height: 70)
@@ -61,7 +61,7 @@ struct ProductItemView: View {
                         }
                     }
                 }
-            }
+//            }
             .padding()
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.1)))
         }

@@ -84,10 +84,6 @@ struct AddEditProductView: View {
     var popToRoot: () -> Void
     
     var body: some View {
-        // Filtering categories based on main category and subcategory
-//        let nis = categories.filter { $0.key.name == mi }.map { $1.self }.first ?? [:]
-//        let xis = nis.filter { $0.key.name == ni }.map { $1.self }.first ?? []
-        
         NavigationView {
             Form {
                 // Image section
